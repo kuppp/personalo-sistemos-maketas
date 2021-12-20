@@ -1,0 +1,313 @@
+<p-tabView [(activeIndex)]="index">
+  <p-tabPanel header="Parko duomenys">
+    <div class="p-fluid">
+      <div class="p-field p-grid">
+        <label for="lastname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+          >Draudėjas</label
+        >
+        <div class="p-col-12 p-md-10">
+          <input
+            id="lastname4"
+            type="text"
+            pInputText
+            value="UAB TRANSPORTO ĮMONĖ"
+            style="width:400px"
+          />
+        </div>
+      </div>
+      <div class="p-field p-grid">
+        <label for="lastname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+          >Išrašymo data</label
+        >
+        <div class="p-col-12 p-md-10">
+          <input
+            id="lastname4"
+            type="text"
+            pInputText
+            disabled
+            value="2021-12-31"
+            style="width:400px"
+          />
+        </div>
+      </div>
+
+      <div class="p-field p-grid">
+        <label for="lastname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+          >Galiojimo datos</label
+        >
+
+        <div class="p-col-12 p-md-10">
+          <input
+            style="width:200px"
+            class="p-mr-2"
+            id="lastname4"
+            type="text"
+            pInputText
+            value="2021-12-31"
+          />
+          <input
+            style="width:200px"
+            type="text"
+            pInputText
+            value="2021-12-31"
+          />
+        </div>
+        <div class="p-col-6 p-md-10"></div>
+      </div>
+      <br />
+      <p-toolbar>
+        <div class="p-toolbar-group-left">
+          <p-button
+            label="Toliau"
+            icon="pi pi-arrow-circle-right"
+            iconPos="left"
+            styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+            (click)="newTabConditions = true; this.index = 1"
+          ></p-button>
+        </div>
+      </p-toolbar>
+    </div>
+  </p-tabPanel>
+
+  <p-tabPanel header="Draudimo sąlygos" *ngIf="newTabConditions">
+    <h3>Standartinės draudimo sąlygos</h3>
+    <p-table
+      [value]="parkConditions"
+      sortField="insType"
+      sortMode="single"
+      [scrollable]="true"
+      scrollHeight="300px"
+      rowGroupMode="subheader"
+      groupRowsBy="insType"
+      responsiveLayout="scroll"
+      styleClass="p-datatable-gridline p-datatable-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="min-width:300px">Draudimo tipas</th>
+          <th style="min-width:120px">Amžius nuo [</th>
+          <th style="min-width:120px">Amžius iki )</th>
+          <th style="min-width:250px">Reikšmė</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="groupheader" let-condition>
+        <tr pRowGroupHeader>
+          <td colspan="5">
+            <span class="p-text-bold p-ml-2">{{ condition.insType }}</span>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-condition let-rowIndex="rowIndex">
+        <tr>
+          <td style="min-width:300px">
+            {{ condition.conditionType }}
+          </td>
+          <td style="min-width:120px">
+            {{ condition.ageFrom }}
+          </td>
+          <td style="min-width:120px">
+            <span>{{ condition.ageTo }}</span>
+          </td>
+          <td style="min-width:250px">
+            {{ condition.value }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <br />
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <p-button
+          label="Toliau"
+          icon="pi pi-arrow-circle-right"
+          iconPos="left"
+          styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+          (click)="newPaymentSchedule = true; this.index = 2"
+        ></p-button>
+      </div>
+    </p-toolbar>
+  </p-tabPanel>
+
+  <p-tabPanel header="Mokėjimo grafikas" *ngIf="newPaymentSchedule">
+
+  <div class="p-field p-grid">
+  <label for="lastname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+    >Mokėjimų skaičius</label
+  >
+
+  <div class="p-col-12 p-md-10">
+  <p-dropdown [options]="paymentSchedule" [(ngModel)]="selectedCityCode" optionLabel="number" optionValue="code"></p-dropdown>
+  
+  </div>
+  <div class="p-col-6 p-md-10"></div>
+</div>
+
+<div class="p-field p-grid">
+<label for="lastname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+  >Pirmos įmokos atidėjimas</label
+>
+
+<div class="p-col-12 p-md-10">
+<p-dropdown [options]="paymentSchedule" [(ngModel)]="selectedCityCode" optionLabel="number" optionValue="code"></p-dropdown>
+
+</div>
+<div class="p-col-6 p-md-10"></div>
+</div>
+
+<p>Mokėjimo grafikas;</p>
+
+    <p-table
+      [rowHover]="true"
+      [value]="paymentSchedule"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="Nr" style="width: 50px">Nr.</th>
+          <th pSortableColumn="status">Data</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-Schedule>
+        <tr>
+          <td style="width: 50px">
+            {{ Schedule.number }}
+          </td>
+          <td>{{ Schedule.date }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <p-button
+        label="Išsaugoti ir tęsti"
+        icon="pi pi-save"
+        iconPos="left"
+        styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+        (click)="newEmptyPark = true; this.index = 3"
+      ></p-button>
+    </div>
+  </p-toolbar>
+
+  </p-tabPanel>
+  <p-tabPanel header="Parkas" *ngIf="newEmptyPark">
+  <h3><b>UAB TRANSPORTO ĮMONĖ</b> parko draudimas</h3> 
+  <h5>Nr: PARK 00000002</h5>
+  <p-table
+  [value]="policies"
+  [scrollable]="true"
+  scrollHeight="550px"
+  [rowHover]="true"
+  resizableColumns="true"
+  columnResizeMode="expand"
+  styleClass="p-datatable-gridline"
+>
+  <ng-template pTemplate="caption">
+    <div class="table-header">
+      Transporto priemonės
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Paieška"
+        />
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="max-width:50px;">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
+      <th pResizableColumn pSortableColumn="policy">Poliso numeris</th>
+      <th pResizableColumn pSortableColumn="status">Statusas</th>
+      <th pResizableColumn pSortableColumn="beginDate">Pradžia</th>
+      <th pResizableColumn pSortableColumn="endDate">Pabaiga</th>
+      <th pResizableColumn pSortableColumn="vehicle.type">Tipas</th>
+      <th pResizableColumn pSortableColumn="vehicle.make">Markė</th>
+      <th pResizableColumn pSortableColumn="vehicle.model">Modelis</th>
+      <th pResizableColumn>Valstybinis numeris</th>
+      <th pResizableColumn>VIN</th>
+      <th pResizableColumn>Vertė</th>
+      <th pResizableColumn>Įmoka</th>
+      <th pResizableColumn pSortableColumn="additionalInsurance.name">Papildomi dr.</th>
+      <th pResizableColumn>Papild. dr. įmoka</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-policy>
+    <tr
+      class="p-selectable-row"
+      [ngClass]="{ 'row-not-imported': policy.status == 0 }"
+    >
+      <td style="max-width: 50px">
+        <p-tableCheckbox
+          [value]="policy"
+          *ngIf="policy.status == 2"
+        ></p-tableCheckbox>
+      </td>
+      <td>{{ policy.policy }}</td>
+      <td>
+        <p-tag *ngIf="policy.status == 1" severity="danger">
+          {{ policy.error }}
+        </p-tag>
+      </td>
+      <td>{{ policy.beginDate }}</td>
+      <td>{{ policy.endDate }}</td>
+      <td>{{ policy.vehicle.type }}</td>
+      <td>{{ policy.vehicle.make }}</td>
+      <td>{{ policy.vehicle.model }}</td>
+      <td>{{ policy.vehicle.plateNo }}</td>
+      <td>{{ policy.vehicle.vinNo }}</td>
+      <td>{{ policy.vehicle.value }}</td>
+      <td>{{ policy.premium }}</td>
+      <td>{{ policy.additionalInsurance.name }}</td>
+      <td>
+        {{ policy.additionalInsurance.premium }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<div class="card right">
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+    <p-button
+      label="Įtraukti naują"
+      icon="pi pi-plus"
+      iconPos="left"
+      styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+    ></p-button>
+    <p-button
+      label="Importuoti"
+      icon="pi pi-arrow-circle-down"
+      iconPos="left"
+      styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+    ></p-button>
+ 
+
+</div>
+
+  <div class="p-toolbar-group-right">
+    <p-splitButton
+      label="Spausdinti"
+      icon="pi pi-file-pdf"
+      (onClick)="save()"
+      [model]="printMenuItems"
+      styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
+    >
+    </p-splitButton>
+  </div>
+</p-toolbar>
+</div>
+
+  </p-tabPanel>
+
+</p-tabView>

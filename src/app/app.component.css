@@ -1,0 +1,36 @@
+
+:host ::ng-deep .p-frozen-column {
+  font-weight: bold;
+}
+
+:host ::ng-deep .p-datatable-frozen-tbody {
+  font-weight: bold;
+}
+:host >>> t {
+  border: 1px solid black;
+  border-collapse: inherit;
+}
+
+
+:host ::ng-deep .row-not-imported {
+  background-color: rgba(184, 71, 71, 0.952) !important;
+}
+
+
+:host >>> html {
+  background: #445555;
+  margin:0px;
+  padding:0px;
+}
+
+:host >>> .btn {
+background-color: rgb(0,134,65);
+border: 0px;
+margin:3px;
+}
+
+.main-content {
+  float: left;
+/*width: 1366px;*/
+  margin: 0 auto;
+}

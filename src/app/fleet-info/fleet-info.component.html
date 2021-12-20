@@ -1,0 +1,283 @@
+<p-tabView>
+
+  <p-tabPanel header="Parkas">
+    <h3><b>UAB TRANSPORTO ĮMONĖ</b> parko draudimas</h3> 
+    <h5>Nr: PARK 00000001</h5>
+   
+     
+    <div class="card right">
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <p-button
+          label="Įtraukti naują"
+          icon="pi pi-plus"
+          iconPos="left"
+          styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+        ></p-button>
+        <p-button
+          label="Importuoti"
+          icon="pi pi-arrow-circle-down"
+          iconPos="left"
+          styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+        ></p-button>
+     
+   
+      <p-splitButton
+        label="Pažymėtiems"
+        icon="pi pi-ellipsis-v"
+        (onClick)="save()"
+        [model]="actionMenuItems"
+        styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
+      >
+      </p-splitButton>
+      <p-splitButton
+      label="Spausdinti"
+      icon="pi pi-file-pdf"
+      (onClick)="save()"
+      [model]="printMenuItems"
+      styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
+    >
+    </p-splitButton>
+    </div>
+
+     
+       
+    
+    </p-toolbar>
+  </div>
+
+      <p-table
+        [value]="policies"
+        [scrollable]="true"
+        scrollHeight="550px"
+        [rowHover]="true"
+        resizableColumns="true"
+        columnResizeMode="expand"
+        styleClass="p-datatable-gridline p=p-datatable-sm"
+      >
+        <ng-template pTemplate="caption">
+          <div class="table-header">
+            Transporto priemonės
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                placeholder="Paieška"
+              />
+            </span>
+          </div>
+        </ng-template>
+  
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="max-width:30px;margin:2px;padding:5px;">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pResizableColumn pSortableColumn="policy">Poliso numeris</th>
+            <th pResizableColumn pSortableColumn="status">Statusas</th>
+            <th pResizableColumn pSortableColumn="beginDate">Pradžia</th>
+            <th pResizableColumn pSortableColumn="endDate">Pabaiga</th>
+            <th pResizableColumn pSortableColumn="vehicle.type">Tipas</th>
+            <th pResizableColumn pSortableColumn="vehicle.make">Markė</th>
+            <th pResizableColumn pSortableColumn="vehicle.model">Modelis</th>
+            <th pResizableColumn>Valstybinis numeris</th>
+            <th pResizableColumn>VIN</th>
+            <th pResizableColumn>Vertė</th>
+            <th pResizableColumn>Įmoka</th>
+            <th pResizableColumn pSortableColumn="additionalInsurance.name">Papildomi dr.</th>
+            <th pResizableColumn>Papild. dr. įmoka</th>
+          </tr>
+        </ng-template>
+  
+        <ng-template pTemplate="body" let-policy>
+          <tr
+            class="p-selectable-row"
+            [ngClass]="{ 'row-not-imported': policy.status == 0 }"
+            (click)="showMoreInfo = true;panel1=80;panel2=20;"
+          >
+            <td  style="max-width:30px">
+              <p-tableCheckbox
+                [value]="policy"
+                *ngIf="policy.status == 2"
+              ></p-tableCheckbox>
+            </td>
+            <td>{{ policy.policy }}</td>
+            <td>
+              <p-tag *ngIf="policy.status == 1" severity="danger">
+                {{ policy.error }}
+              </p-tag>
+            </td>
+            <td>{{ policy.beginDate }}</td>
+            <td>{{ policy.endDate }}</td>
+            <td>{{ policy.vehicle.type }}</td>
+            <td>{{ policy.vehicle.make }}</td>
+            <td>{{ policy.vehicle.model }}</td>
+            <td>{{ policy.vehicle.plateNo }}</td>
+            <td>{{ policy.vehicle.vinNo }}</td>
+            <td>{{ policy.vehicle.value }}</td>
+            <td>{{ policy.premium }}</td>
+            <td>{{ policy.additionalInsurance.name }}</td>
+            <td>
+              {{ policy.additionalInsurance.premium }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+
+  </p-tabPanel>
+
+  
+  <p-tabPanel header="Sutarties sąlygos">
+    <h2>Pagrindiniai duomenys</h2>
+    <div class="p-fluid">
+      <div class="p-field p-grid">
+        <label for="firstname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+          >Sutarties numeris</label
+        >
+        <div class="p-col-12 p-md-10">
+          <input
+            id="firstname4"
+            type="text"
+            pInputText
+            disabled
+            value="PARK 00000001"
+            style="width:400px"
+          />
+        </div>
+      </div>
+      <div class="p-field p-grid">
+        <label for="lastname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+          >Draudėjas</label
+        >
+        <div class="p-col-12 p-md-10">
+          <input
+            id="lastname4"
+            type="text"
+            pInputText
+            disabled
+            value="UAB TRANSPORTO ĮMONĖ"
+            style="width:400px"
+          />
+        </div>
+      </div>
+
+      <div class="p-field p-grid">
+        <label for="lastname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+          >Išrašymo data</label
+        >
+        <div class="p-col-12 p-md-10">
+          <input
+            id="lastname4"
+            type="text"
+            pInputText
+            disabled
+            value="2021-12-31"
+            style="width:400px"
+          />
+        </div>
+      </div>
+
+      <div class="p-field p-grid">
+        <label for="lastname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+          >Galiojimo datos</label
+        >
+
+        <div class="p-col-12 p-md-10">
+          <input
+            style="width:200px"
+            class="p-mr-2"
+            id="lastname4"
+            type="text"
+            pInputText
+            disabled
+            value="2021-12-31"
+          />
+          <input
+            style="width:200px"
+            type="text"
+            pInputText
+            disabled
+            value="2021-12-31"
+          />
+        </div>
+        <div class="p-col-6 p-md-10"></div>
+      </div>
+    </div>
+    <h2>Kitos sąlygos</h2>
+    <p-table
+      [value]="parkConditions"
+      sortField="insType"
+      sortMode="single"
+      [scrollable]="true"
+      scrollHeight="300px"
+      rowGroupMode="subheader"
+      groupRowsBy="insType"
+      responsiveLayout="scroll"
+      styleClass="p-datatable-sm p-datatable-gridline"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="min-width:300px">Draudimo tipas</th>
+          <th style="min-width:120px">Amžius nuo [</th>
+          <th style="min-width:120px">Amžius iki )</th>
+          <th style="min-width:250px">Reikšmė</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="groupheader" let-condition>
+        <tr pRowGroupHeader>
+          <td colspan="5">
+            <span class="p-text-bold p-ml-2">{{
+              condition.insType
+            }}</span>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-condition let-rowIndex="rowIndex">
+        <tr>
+          <td style="min-width:300px">
+            {{ condition.conditionType }}
+          </td>
+          <td style="min-width:120px">
+            {{ condition.ageFrom }}
+          </td>
+          <td style="min-width:120px">
+            <span>{{ condition.ageTo }}</span>
+          </td>
+          <td style="min-width:250px">
+            {{ condition.value }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+
+  <p-tabPanel header="Mokėjimo grafikas">
+    <p-table
+     
+      [rowHover]="true"
+      [value]="paymentSchedule"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="Nr" style="max-width: 50px">Nr.</th>
+          <th pSortableColumn="status">Data</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-Schedule>
+        <tr>
+          <td style="max-width: 50px">
+            {{ Schedule.number }}
+          </td>
+          <td>{{ Schedule.date }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+</p-tabView>
